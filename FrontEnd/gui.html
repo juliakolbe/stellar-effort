@@ -22,6 +22,7 @@
     padding: 0px; 
     color: #1e0303;
     margin: 0;
+    font-size: 0.75rem;
   }
 
   h1 {
@@ -130,28 +131,43 @@ h2 {
         <p>Thrusting Toggle</p>
         <div class="control-panel">
 
-            <button onclick="applyThrust()">Apply Thrust</button>
-            
-            <div class="control-group">
-                <label for="thrust-force">Thrust Force (N):</label>
-                <input type="number" id="thrust-force" step="0.1" value="100.0">
-            </div>
-    
-            <div class="control-group">
-                <label for="burn-efficiency">Burn Efficiency:</label>
-                <input type="number" id="burn-efficiency" step="0.01" value="0.95">
-            </div>
-    
-            <div class="control-group">
+            <button id="thrusterButton"> Thruster Disengaged </button> <!-- declares button variable, sets default to no thruster engaged-->
+
+            <!-- initialise use of javascript ... -->
+            <script>
+                button = document.getElementById("thrusterButton");
+
+                function thrusterButton(){
+                    if (button.classList.contains("active")) {
+                        button.classList.toggle("active");
+                        button.textContent = "Thruster Disengaged";
+                    }
+                    else {
+                        button.classList.toggle("active");
+                        button.textContent = "Thruster Activated"
+                    }
+                }
+
+<!-- seems to me like this is how javascript syntax must be written. I am trying to learn js while i code this program, so some code will be mroe "definition" like ... -->
+            button.addEventListener("click", thrusterButton);
+
+            document.addEventListener("keydown", (press) => {
+                if (press.code === "Space") {
+                    event.preventDefault();
+                    thrusterButton();
+                }
+            });
+            </script>
+<br><br>
+            <div>
                 <label for="duration">Burn Duration (s):</label>
                 <input type="number" id="duration" step="0.1" value="1.0">
             </div>
 
     
-            <div class="status-display">
+            <div>
                 <p>Fuel Mass: <span id="fuel-mass">0.0</span> kg</p>
                 <p>Total Mass: <span id="total-mass">0.0</span> kg</p>
-                <p>Empty Mass: <span id="empty-mass">0.0</span> kg</p>
             </div>
         </div>
         </div>
