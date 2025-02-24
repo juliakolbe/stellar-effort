@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Moon Lander</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+<style>
+
+@font-face {
+  font-family: 'PressStart2P-Regular';
+  src: url('PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  }
+
+  body {
+    background-color: #190620;
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    margin: 50px; /* adds space around all content */
+    padding: 0px; 
+    color: #1e0303;
+    margin: 0;
+    font-size: 0.75rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #e9dfdf;
+    font-family: 'PressStart2P-Regular', sans-serif;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #e9dfdf;
+    font-family: 'PressStart2P-Regular', sans-serif;
+    margin-bottom: 10px;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+}
+
+.flex-row {
+    display: flex;
+    gap: 20px;
+}
+
+.block {
+    background-color: #dcdcdc;
+    border: 1px solid #aaa;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    flex: 1;
+}
+
+.two-column {
+    display: flex;
+    gap: 20px;
+}
+
+.left-column {
+    flex: 2;
+}
+
+.right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.lunar-graphic {
+    flex: 2.75;  
+    height: 700px;
+}
+
+.dashboard {
+   flex: 0.75; 
+   height: 300px;
+    }
+
+.status {
+   flex: 0.75; 
+   height: 300px;
+}
+
+.thrust {
+   flex: 0.75; 
+   height: 400px;
+}
+
+</style>
+
+<body>
+     <!-- Titles -->
+    <h2> <center> Stellar Effort's </center></h2>
+    <h1><center> LUNAR LANDER </center></h1>
+    <br><br>
+
+    <div class="container">
+    <div class ="two-column">
+
+    <!-- Lunar Graphic & Dashboard -->
+    
+        <!-- Lunar Graphic -->
+     <div class="left-column">
+        <div class="block lunar-graphic">
+        <p>Lunar Graphic</p>
+        </div>
+    </div>
+    <div class="right-column">
+        <!-- Dashboard Data -->
+        <div class="block dashboard">
+        <p>Dashboard</p>
+        </div>
+
+        <!-- Status & Alerts -->
+        <div class="block status">
+        <p>Status and Alerts</p>
+        </div>
+
+        <!-- Thrusting: OFF/ON -->
+        <div class="block thrust">
+        <p>Thrusting Toggle</p>
+        <div class="control-panel">
+
+            <button id="thrusterButton">Thruster Disengaged</button> <!-- declares button variable? -->
+
+            <!-- initialise use of javascript ...? -->
+            <script>
+                button = document.getElementById("thrusterButton");
+
+                function thrusterButton(){
+                    if (button.classList.contains("active")) {
+                        button.classList.toggle("active");
+                        button.textContent = "Thruster Disengaged";
+                    }
+                    else {
+                        button.classList.toggle("active");
+                        button.textContent = "Thruster Activated"
+                    }
+                }
+
+            button.addEventListener("click", thrusterButton);
+
+            document.addEventListener("keydown", (press) => {
+                if (press.code === "Space") {
+                    event.preventDefault();
+                    thrusterButton();
+                }
+            });
+            </script>
+<br><br>
+            <div>
+                <label for="duration">Burn Duration (s):</label>
+                <input type="number" id="duration" step="0.1" value="1.0">
+            </div>
+
+    
+            <div>
+                <p>Fuel Mass: <span id="fuel-mass">0.0</span> kg</p>
+                <p>Total Mass: <span id="total-mass">0.0</span> kg</p>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>
