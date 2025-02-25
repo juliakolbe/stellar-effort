@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Moon Lander</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+<style>
+  @font-face {
+  font-family: 'PressStart2P-Regular';
+  src: url('PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  }
+
+  body {
+  background-color: #190620;
+  font-family: 'Georgia', 'Times New Roman', Times, serif;
+  margin: 50px; /* adds space around all content */
+  padding: 0px; 
+  color: #d6d6d6;
+    background: url('images/moon-background.jpg') no-repeat center center/cover;
+    font-family: 'PressStart2P-Regular','Orbitron', sans-serif;
+    text-align: center;
+    color: white;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Center the content */
+.container {
+    padding: 30px;
+    border-radius: 10px;
+}
+
+/* Style the title */
+h1 {
+    font-size: 3rem;
+    font-family: 'PressStart2P-Regular', sans-serif;
+    margin-bottom: 10px;
+}
+
+/* Style the button */
+.play-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #bf3ae1;
+    color: black;
+    font-size: 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+.play-button:hover {
+    background: #ff7411;
+}
+</style>
+
+<body>
+  <video autoplay loop muted playsinline class="background-video">
+    <source src="juliaSpace.mp4" type="video/mp4">
+    Your browser doesn't support the video tag.
+</video>
+
+  <div class="container">
+ 
+      <h1>Lunar Lander</h1>
+      <p>Can you land safely on the Moon? <br><br>Test your piloting skills!</p>
+      <a href="game.html" class="play-button">Play Now</a>
+  </div>
+
+</body>
+</html>
+

@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Moon Lander</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+<style>
+
+    @font-face {
+  font-family: 'PressStart2P-Regular';
+  src: url('PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  }
+
+body {
+  background-color: #190620;
+  font-family: 'Georgia', 'Times New Roman', Times, serif;
+  margin: 50px; /* adds space around all content */
+  padding: 0px; 
+  color: #d6d6d6;
+
+    background: url('images/moon-background.jpg') no-repeat center center/cover;
+    font-family: 'PressStart2P-Regular','Orbitron', sans-serif;
+    text-align: center;
+    color: white;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.container {
+    padding: 30px;
+    border-radius: 10px;
+}
+
+a:link { 
+            color: #f9eeff; 
+            background-color: #3e0844;
+        }
+
+        a:hover { 
+            color: #ff8989; 
+            text-decoration: bold; 
+        }
+
+        a:visited {
+            color: rgb(255, 189, 255); 
+        }
+
+</style>
+
+<body>
+  <video autoplay loop muted playsinline class="background-video">
+    <source src="juliaSpace.mp4" type="video/mp4">
+    Your browser doesn't support the video tag.
+</video>
+
+  <div class="container">
+ 
+      <h1>Stellar Effort</h1>
+      <h2> Meet the Team </h2>
+
+      <br>
+      <br>
+
+      <nav>
+
+        <a href="#TeamProjects"> Anastasia W. </a> | 
+        <a href="#TeamProjects"> Emma H.</a> | 
+        <a href="#TeamProjects"> Julia C.</a> | 
+        <a href="#TeamProjects">Anthony A.</a> | 
+        <a href="#TeamProjects">Noah K. </a> 
+
+      </nav>
+     
+  </div>
+
+</body>
+</html>
