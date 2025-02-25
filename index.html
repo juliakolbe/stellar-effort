@@ -27,7 +27,7 @@
 
   h1 {
     font-size: 3rem;
-    color: #e9dfdf;
+    color: #ef6a04;
     font-family: 'PressStart2P-Regular', sans-serif;
     margin-bottom: 10px;
 }
@@ -139,23 +139,46 @@ h2 {
         <center><p> Run-time: 
         </p></center>
             <div id="clock"></div>
-            <!-- i made this timer but it resets after a minute, so i need to fix that -->
+            <!-- designed this so that the counter keeps running unless the user lands or crashes, or otherwise presses  -->
             <script> 
-            function updateTime() {
-                const now = new Date();
-                let seconds = now.getSeconds();
 
-                seconds = seconds < 10 ? '0' + seconds : seconds;
+                let counter = 0;
+                let hasLanded = false;
+                let hasCrashed = false;
+                let hasReset = false; 
 
-                const timeString = seconds;
-                document.getElementById('clock').textContent = timeString;
+                let interval = setInterval(() => {
+                    if (hasLanded || hasCrashed || hasReset) {
+                        clearInterval(interval);
+                        return;
+                       }   
+                    
+                   document.getElementById('clock').textContent = counter; counter++;
+                    }, 1000);
+            
 
-            }
+                document.addEventListener("keydown", (event) => {
+                    if (event.key --- "Escape") {
+                        clearInterval(interval);
+                    }
+                });
 
-            setInterval(updateTime, 1000);
-            updateTime();
+                function landRocket() {
+                    hasLanded = true;
+                }
+
+                function crashRocket() {
+                    hasCrashed = true;
+                }
+
+                function reset() {
+                    hasReset = true;
+                }
 
             </script>
+
+            <!--- this button stops the timer, but doesn't actually reset it yet-->
+            <button onclick="reset()">Stop Timer</button>
 
 
         </p></center>
@@ -165,11 +188,6 @@ h2 {
         <center><p> Pressure: </p></center>
         <center><p> Fuel Remaining: </p></center>
         </div>
-
-
-
-
-
 
 
         <!-- Status & Alerts -->
