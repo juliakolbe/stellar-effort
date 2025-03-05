@@ -1,4 +1,15 @@
 import pyodbc
+import os
+import importlib.util
+
+# Check if Algorithms.py exists in the same directory
+algorithms_path = os.path.join(os.path.dirname(__file__), 'Algorithms.py')
+if os.path.exists(algorithms_path):
+    spec = importlib.util.spec_from_file_location("Algorithms", algorithms_path)
+    Algorithms = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(Algorithms)
+else:
+    print("Warning: Algorithms.py not found in the current directory.")
 
 class DatabaseConnector:
     def __init__(self, server, database, username, password):
