@@ -51,7 +51,6 @@ class DatabaseConnector:
     def close_connection(self):
         self.connection.close()
     
-    # Simulated data (in a real case, integrate with DoomLander)
     db.insert_lander_state(time_elapsed=10, altitude=8000, velocity=-15, fuel_mass=600, thrust_applied=2200)
     
     data = db.fetch_all_data()
