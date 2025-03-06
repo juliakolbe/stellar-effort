@@ -28,9 +28,9 @@ CREATE TABLE `lander_data` (
   `rocket_id` int NOT NULL,
   `altitude` decimal(10,3) DEFAULT NULL,
   `fuel_left` decimal(7,2) DEFAULT NULL,
-  `landing_distance` decimal(10,2) DEFAULT NULL,
   `velocity` decimal(8,2) DEFAULT NULL,
   `acceleration` decimal(8,2) DEFAULT NULL,
+  `thrust_force` float DEFAULT NULL,
   `mass` decimal(8,2) DEFAULT NULL,
   PRIMARY KEY (`rocket_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -42,7 +42,7 @@ CREATE TABLE `lander_data` (
 
 LOCK TABLES `lander_data` WRITE;
 /*!40000 ALTER TABLE `lander_data` DISABLE KEYS */;
-INSERT INTO `lander_data` VALUES (1,8500.0,640.0,NULL,NULL,NULL,1200.0),(2,NULL,NULL,NULL,NULL,NULL,NULL),(3,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `lander_data` VALUES (1,8500.0,640.0,NULL,NULL,2200.0,1200.0),(2,NULL,NULL,NULL,NULL,NULL,NULL),(3,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `lander_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
