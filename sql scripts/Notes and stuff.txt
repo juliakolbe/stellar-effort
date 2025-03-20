@@ -1,4 +1,4 @@
-*READ ME*
+Full Update Log: 
 
 Yeah, so the two tables are what I was able to condense, with both output and input being connected by a primary key via rocket_id. 
 Set the rocket_id to what you want in order to set it as empty, with astronaut, or with rover. 
@@ -8,9 +8,9 @@ The .csv files were also uploaded in case of a simpler data structure being need
 
 3/5/25 UPDATE:
 +Database schema was exported and now uploaded as "rocket database.sql" 
--Other .sql or .csv files are now outdated, but if they serve useful, then use them and modify if you like. 
+-Other .sql or .csv files are now outdated, but if they serve useful, then use them and modify if you like. (NOW DELETED, REPLACED WITH CURRENT FILES)
 
 3/6/25 UPDATE:
-+NEW file was created to run both python scripts together.
++NEW file was created to run both python scripts together. (IMPORTANT: PLEASE REVIEW PYTHON FILES)
 +Database updated to correspond to the files
 +Both of pre-existing backend codes were edited substantially to include proper database values and columns
