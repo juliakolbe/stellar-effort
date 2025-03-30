@@ -87,13 +87,6 @@ def home():
 
 # API to get Lander status
 @app.route('/lander_status', methods=['GET'])
-def get_status():
-    return jsonify({
-        "altitude": lander.state.altitude,
-        "velocity": lander.state.velocity.y,
-        "fuel_mass": lander.state.fuel_mass,
-        "total_mass": lander.state.mass
-    })
 
 # API to apply thrust
 @app.route('/apply_thrust', methods=['POST'])
@@ -111,6 +104,14 @@ def apply_thrust():
 if __name__ == '__main__':
     app.run(debug=True)
 
+lander = DoomLander()
+
+def get_status():
+    return {
+        "altitude": lander.get_altitude(),
+        "velocity": lander.get_velocity(),
+        "fuel": lander.get_fuel_mass(),
+    }
 '''
 # Driver Code
 def run_lunar_landing_simulation():
