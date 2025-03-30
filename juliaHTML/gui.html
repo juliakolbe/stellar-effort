@@ -1,91 +1,101 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>Moon Lander</title>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="lander.js" defer></script>
+    <script defer>
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/lander_status');
+                const data = await response.json();
+                document.getElementById('altitude-Alert').innerText = `Altitude: ${data.altitude.toFixed(2)} m`;
+                document.getElementById('fuel-mass').innerText = data.fuel_mass.toFixed(2);
+                document.getElementById('total-mass').innerText = data.total_mass.toFixed(2);
+            } catch (error) {
+                console.error("Error fetching lander status:", error);
+            }
+        }
+
+        async function sendThrustCommand() {
+            const thrust = document.getElementById("thrust").value;
+            const duration = document.getElementById("duration").value;
+
+            try {
+                const response = await fetch('/apply_thrust', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ thrust: thrust, duration: duration })
+                });
+
+                const result = await response.json();
+                console.log(result);
+                updateDashboard();
+            } catch (error) {
+                console.error("Error applying thrust:", error);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateDashboard();
+            document.getElementById("thrusterButton").addEventListener("click", sendThrustCommand);
+        });
+
+        setInterval(updateDashboard, 1000);
+    </script>
+</head>
 
 <body>
-     <!-- Titles -->
-    <h2> <center> Stellar Effort's </center></h2>
+    <h2><center> Stellar Effort's </center></h2>
     <h1><center> LUNAR LANDER </center></h1>
     <br><br>
 
     <div class="container">
-    <div class ="two-column">
+        <div class="two-column">
+            <div class="left-column">
+                <div class="block lunar-graphic">
+                    <div id="lander" class="lander"></div>
+                </div>
+            </div>
 
-    <!-- Lunar Graphic & Dashboard -->
-    
-        <!-- Lunar Graphic -->
-     <div class="left-column">
-        <div class="block lunar-graphic">
-        <div id="lander" class="lander"></div>
+            <div class="right-column">
+                <div class="block dashboard">
+                    <p>Dashboard</p>
+                </div>
+
+                <div class="block status">
+                    <p>Status and Alerts</p>
+                    <p id="altitude-Alert"></p>
+                </div>
+
+                <div class="block thrust">
+                    <p>Thrusting Toggle</p>
+                    <div class="control-panel">
+                        <button id="thrusterButton">Apply Thrust</button>
+
+                        <div>
+                            <label for="thrust">Thrust (N):</label>
+                            <input type="number" id="thrust" step="10" value="0">
+                        </div>
+
+                        <div>
+                            <label for="duration">Burn Duration (s):</label>
+                            <input type="number" id="duration" step="0.1" value="1">
+                        </div>
+
+                        <div>
+                            <p>Fuel Mass: <span id="fuel-mass">0.0</span> kg</p>
+                            <p>Total Mass: <span id="total-mass">0.0</span> kg</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="right-column">
-        <!-- Dashboard Data -->
-        <div class="block dashboard">
-        <p>Dashboard</p>
-        </div>
 
-        <!-- Status & Alerts -->
-        <div class="block status">
-        <p>Status and Alerts</p>
-        <p id="altitude-Alert"></p>
-        </div>
-
-        <!-- Thrusting: OFF/ON -->
-        <div class="block thrust">
-        <p>Thrusting Toggle</p>
-        <div class="control-panel">
-
-            <button id="thrusterButton" class="thrusterButton">Thruster Disengaged</button> <!-- declares button variable? -->
-
-            <div>
-                <label for="thrust">Thrust (N):</label>
-                <input type="number" id="thrust" step="0.1" value="0.0">
-            </div>
-           <!-- <script>
-                button = document.getElementById("thrusterButton");
-
-                function thrusterButton(){
-                    if (button.classList.contains("active")) {
-                        button.classList.toggle("active");
-                        button.textContent = "Thruster Disengaged";
-                    }
-                    else {
-                        button.classList.toggle("active");
-                        button.textContent = "Thruster Activated"
-                    }
-                }
-
-            button.addEventListener("click", thrusterButton);
-
-            document.addEventListener("keydown", (press) => {
-                if (press.code === "Space") {
-                    event.preventDefault();
-                    thrusterButton();
-                }
-            });
-            </script> -->
-<br><br>
-            <div>
-                <label for="duration">Burn Duration (s):</label>
-                <input type="number" id="duration" step="0.1" value="1.0">
-            </div>
-
-    
-            <div>
-                <p>Fuel Mass: <span id="fuel-mass">0.0</span> kg</p>
-                <p>Total Mass: <span id="total-mass">0.0</span> kg</p>
-            </div>
-        </div>
-        </div>
-        </div>
-    </div>
+</body>
+</html>
 
 </body>
 </html>
