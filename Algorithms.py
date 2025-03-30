@@ -1,5 +1,9 @@
+from flask import Flask, render_template, request, jsonify
 import math
 from collections import deque
+import os
+
+app = Flask(__name__, template_folder='juliaHTML')
 
 # Vector2D
 class Vector2D:
@@ -75,6 +79,37 @@ class DoomLander:
         return self.state.velocity.y
     def get_fuel_mass(self):
         return self.state.fuel_mass
+
+# Serve the GUI
+@app.route('/')
+def home():
+    return render_template('gui.html')
+
+# API to get Lander status
+@app.route('/lander_status', methods=['GET'])
+def get_status():
+    return jsonify({
+        "altitude": lander.state.altitude,
+        "velocity": lander.state.velocity.y,
+        "fuel_mass": lander.state.fuel_mass,
+        "total_mass": lander.state.mass
+    })
+
+# API to apply thrust
+@app.route('/apply_thrust', methods=['POST'])
+def apply_thrust():
+    data = request.json
+    thrust = float(data.get('thrust', 0))
+    duration = float(data.get('duration', 1.0))
+    
+    lander.queue_thrust_command(thrust)
+    for _ in range(int(duration)):  
+        lander.update()
+
+    return jsonify({"message": "Thrust applied", "thrust": thrust, "duration": duration})
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 '''
 # Driver Code
