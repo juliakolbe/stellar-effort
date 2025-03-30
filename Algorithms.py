@@ -45,7 +45,7 @@ class ThrustControl:
 
 # Lander "Doom"
 class DoomLander:
-    def init(self, empty_mass, initial_fuel, initial_altitude):
+    def __init__(self, empty_mass, initial_fuel, initial_altitude):
         self.state = LanderState()
         self.state.init(empty_mass, initial_fuel)
         self.state.altitude = initial_altitude
@@ -104,7 +104,7 @@ def apply_thrust():
 if __name__ == '__main__':
     app.run(debug=True)
 
-lander = DoomLander()
+lander = DoomLander(empty_mass=1200.0, initial_fuel=640.0, initial_altitude=8500.0)
 
 def get_status():
     return {
