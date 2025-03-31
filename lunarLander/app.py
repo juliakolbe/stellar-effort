@@ -21,7 +21,7 @@ def index():
 @app.route('/thrust', methods=['POST'])
 def thrust():
     data = request.get_json()
-    thrust_value = data.get('thrust', 0.0)
+    # thrust_value = data.get('thrust', 0.0)
     print(f"Thrust received: {thrust_value}")
     doom_lander.queue_thrust_command(thrust_value)
     doom_lander.update()
