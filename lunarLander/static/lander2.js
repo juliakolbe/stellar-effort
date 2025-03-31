@@ -37,7 +37,7 @@ document.addEventListener("keyup", (event) => { /* keyup = button released */
         rightArrow = false;
     }
     if (event.code === "Space") {
-        thrustOn = true;
+        thrustOn = false;
         thrusterbutton.classList.remove("active");
         thrusterbutton.innerHTML = "Inactive";
     }
