@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'PressStart2P-Regular';
+    src: url('PressStart2P-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+    body {
+      background-color: #190620;
+      font-family: 'PressStart2P-Regular', sans-serif;
+      margin: 50px; /* adds space around all content */
+      padding: 0px; 
+      color: #1e0303;
+      margin: 0;
+      overflow:hidden;
+      font-size: 0.75rem;
+    }
+
+  #lander20 {
+      width: 15px;
+      height: 15px; 
+      background: silver;
+      position: absolute; /* allows us to position the lander */
+      top: 50px;
+      left: 150px;
+      transform: translateX(-50%);
+      transition: bottom 0.1s linear; /* smooth transition for the bottom property */
+  }
+  
+    h1 {
+      font-size: 3rem;
+      color: #e9dfdf;
+      font-family: 'PressStart2P-Regular', sans-serif;
+      margin-bottom: 10px;
+  }
+  
+  h2 {
+      font-size: 1.5rem;
+      color: #e9dfdf;
+      font-family: 'PressStart2P-Regular', sans-serif;
+      margin-bottom: 10px;
+  }
+  
+  .container {
+      width: 90%;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+  }
+  
+  .flex-row {
+      display: flex;
+      gap: 20px;
+  }
+  
+  .block {
+      background-color: #dcdcdc;
+      border: 1px solid #aaa;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.2em;
+      flex: 1;
+  }
+  
+  .two-column {
+      display: flex;
+      gap: 10px;
+  }
+  
+  .left-column {
+      flex: 4;
+  }
+  
+  .right-column {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 300px; 
+  }
+  
+  .lunar-graphic {
+      /*flex: 2.75;  
+      height: 700px;*/
+      position: relative;
+      background-color: black;
+      overflow: hidden;
+      width: 1400px;
+      height: 900px;
+      margin: 0 auto;
+      border: 2px solid #f98757; 
+  }
+
+  .lander {
+    width: 20px;
+    height: 30px;
+    background: rgb(237, 221, 221);
+    position: absolute;
+    left: 200px;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    transition: background 0.1s;
+  }
+  
+  .dashboard {
+     flex: 0.75; 
+     height: 250px;
+      }
+  
+  .status {
+     flex: 0.75; 
+     height: 250px;
+  }
+  
+  .thrust {
+     flex: 0.75; 
+     height: 250px;
+  }
+
+.lander-object {
+    width: 30px;
+    height: 40px;
+    background: gray;
+    border-radius: 5px;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .thrusterButton {
+    background-color: rgb(218, 136, 152);
+    color: white;
+    font-weight: bold;
+    border: 2px solid #fff;
+  }
+
+  .thrusterButton.active {
+    background-color: crimson;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #fff;
+  }
+  
