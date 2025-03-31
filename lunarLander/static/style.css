@@ -21,7 +21,7 @@
       height: 15px; 
       background: silver;
       position: absolute; /* allows us to position the lander */
-      top: 50px;
+      bottom: 50px;
       left: 150px;
       transform: translateX(-50%);
       transition: bottom 0.1s linear; /* smooth transition for the bottom property */
