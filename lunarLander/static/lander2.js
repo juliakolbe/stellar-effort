@@ -11,10 +11,12 @@ let Xposition = 200;
 let Yposition = 200;
 let leftArrow = false;
 let rightArrow = false;
+let thrustOn = false;
 
 console.log("Script is running!");
 
-document.addEventListener("keydown", (event) => { /* keydown = button pushed */ 
+// Key down events
+document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
         leftArrow = true;
     }
@@ -23,16 +25,16 @@ document.addEventListener("keydown", (event) => { /* keydown = button pushed */
     }
     if (event.code === "Space" && !landed) {
         sendThrust(1000);
-        thrustOn = true; 
+        thrustOn = true;
         thrusterbutton.classList.add("active");
         thrusterbutton.innerHTML = "Engaged";
     }
 });
 
-document.addEventListener("keyup", (event) => { /* keyup = button released */
+// Key up events
+document.addEventListener("keyup", (event) => {
     if (event.key === "ArrowLeft") {
         leftArrow = false;
-        console.log("Key pressed:", event.code);
     }
     if (event.key === "ArrowRight") {
         rightArrow = false;
@@ -47,75 +49,62 @@ document.addEventListener("keyup", (event) => { /* keyup = button released */
 function sendThrust(thrustValue) {
     fetch('/thrust', {
         method: 'POST', 
-        headers: { 'Content-Type': 'application/json' }, /* this tells the server that we are sending JSON data */
-        body: JSON.stringify({ /* this sends JSON data to the server */
-            thrust: thrustValue })/* this is the value of the thrust */
-        });
-}
-
-setInterval(getLanderState, 100); 
-
-function getLanderState() {
-    fetch('/state') /* this asks "server" for stats */
-    .then(res => res.json()) /* converts the python's response into JSON format */
-    .then(data => {
-        updateGUI(data); /* this function will update the GUI with the data */
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ thrust: thrustValue })
     });
 }
 
-document.addEventListener("keydown", event => {
-    if (event.code === "Space" && !landed) {
-        sendThrust(1000); /* 1000 is rando number. This sends a request to the server to apply thrust */
-        console.log("hitting the space bar, baby")
-    }
-});
+// Fetch lander state from server every 100ms
+setInterval(getLanderState, 100); 
+
+function getLanderState() {
+    fetch('/state')
+    .then(res => res.json())
+    .then(data => {
+        updateGUI(data);
+    });
+}
 
 function updateX() {
     if (leftArrow) Xposition -= 2;
     if (rightArrow) Xposition += 2; 
+
     lander.style.left = `${Xposition}px`;
     requestAnimationFrame(updateX);
 }
 
 function updateY() {
     if (thrustOn) {
-        Yposition += 3; // Move up when thrust is on
+        Yposition -= 3; // Move up
     } else {
-        Yposition -= 1; // Gravity pulls it down
+        Yposition += 1; // Gravity pulls it down
     }
-    if (Yposition < 0) Yposition = 0; // Prevent lander from going below ground
-    lander.style.top = `{Yposition}px`;
-    requestAnimationFrame(updateY);
 
+    if (Yposition < 0) Yposition = 0; // Prevent lander from going too high
+    lander.style.top = `${Yposition}px`;
+
+    requestAnimationFrame(updateY);
+}
+
+// Call the update functions
 updateX();
 updateY();
 
-/* this function below pulls from the flask python connection and fetches these values */
+// Update GUI with fetched data
 function updateGUI(state) {
-    const { altitude, velocity, fuel, landed: hasLanded, thrust_status, safe } = state; /* i loooove this, this is so sexy and efficient. so slay.  */
+    const { altitude, velocity, fuel, landed: hasLanded, thrust_status, safe } = state;
 
-    console.log("Updating GUI", Xposition);
+    console.log("Updating GUI", Xposition, Yposition);
 
-    altitudeText.innerText = `${altitude.toFixed(1)} m`; /* updates the altitude */
-    velocityText.innerText = `${velocity.toFixed(2)} m/s`; /* updates the velocity */
-    fuelText.innerText = `${fuel} kg`; /* this updates the fuel */
+    altitudeText.innerText = `${altitude.toFixed(1)} m`;
+    velocityText.innerText = `${velocity.toFixed(2)} m/s`;
+    fuelText.innerText = `${fuel} kg`;
     document.getElementById("thrust").innerHTML = thrust_status;
-
-    lander.style.bottom = (altitude * 0.05) + "px"; /* this moves the lander down based on the altitude. 0.05 is a scaling factor to make it fit on the screen. */
 
     if (hasLanded && !landed) {
         landed = true;
-        if (safe) {
-            statusText.innerText = "Landed safely!"; 
-        }
-        else {
-            statusText.innerText = "Crashed...";
-        }
+        statusText.innerText = safe ? "Landed safely!" : "Crashed...";
     }
 
-    if (altitude < 250 && altitude > 0) {
-        altitudeAlert.innerText = "Low Altitude";
-    } else {
-        altitudeAlert.innerText = "";
-    }
+    altitudeAlert.innerText = (altitude < 250 && altitude > 0) ? "Low Altitude" : "";
 }
