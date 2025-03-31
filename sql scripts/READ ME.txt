@@ -1,7 +1,0 @@
-*READ ME*
-
-Yeah, so the two tables are what I was able to condense, with both output and input being connected by a primary key via rocket_id. 
-Set the rocket_id to what you want in order to set it as empty, with astronaut, or with rover. 
-If there are errors, bugs, or items missing, PLEASE LET ME KNOW! I'll swiftly update the database.
--
-The .csv files were also uploaded in case of a simpler data structure being needed.
