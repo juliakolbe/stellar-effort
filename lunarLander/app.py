@@ -22,14 +22,14 @@ def index():
 def thrust():
     data = request.get_json()
     thrust_value = data.get('thrust', 0.0)
-    print(f"Thrust received: {thrust_value}")  # Fixed print statement
+    print(f"Thrust received: {thrust_value}")
     doom_lander.queue_thrust_command(thrust_value)
     doom_lander.update()
     return jsonify(success=True)
 
 @app.route('/state')
 def state():
-    doom_lander.queue_thrust_command(0.0)  # Apply no thrust if nothing is pressed
+    # doom_lander.queue_thrust_command(0.0)  # Apply no thrust if nothing is pressed
     doom_lander.update()  # Advance physics regardless
 
     thrust_status = "Inactive"
