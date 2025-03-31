@@ -8,10 +8,12 @@
 body {
     background-color: #190620;
     font-family: 'PressStart2P-Regular', sans-serif;
+    margin: 50px; /* adds space around all content */
+    padding: 0px; 
+    color: #1e0303;
     margin: 0;
-    overflow: hidden;
+    overflow:hidden;
     font-size: 0.75rem;
-    color: #e9dfdf;
 }
 
 #lander20 {
