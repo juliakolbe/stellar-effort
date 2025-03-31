@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('static', filename='lander2.js') }}" defer></script>
+   <!--  <link rel="stylesheet" href="style.css"> -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title> Stellar Effort's Lunar Lander </title>
+
+<!-- 
+<style> 
+ body {
+        background: black;
+        color: white;
+        font-family: monospace;
+        overflow: hidden; 
+        margin:0;
+    }
+
+    #lander20 {
+        width: 30px;
+        height: 30px; 
+        background: silver;
+        position: absolute; /* allows us to position the lander */
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: bottom 0.1s linear; /* smooth transition for the bottom property */
+    }
+
+    #stats {
+        position: fixed;
+        top:10px; /* position from the top of the screen */ 
+        left: 10px; /* position from the left of the screen */
+        background: #451a70df; 
+        padding: 10px; 
+        border-radius: 10px;
+    }
+    #stats div {
+        margin: 5px 0; /* space between each line of stats */
+        font-size: 16px; /* font size for the stats */
+    }
+
+    #thrusterE {
+        position: fixed;
+        top:50px; /* position from the top of the screen */ 
+        left: 10px; /* position from the left of the screen */
+        background: #451a70df; 
+        padding: 10px; 
+        border-radius: 10px;
+    }
+    #thrusterE div {
+        margin: 5px 0; /* space between each line of stats */
+        font-size: 16px; /* font size for the stats */
+    }
+
+</style>
+-->
+</head>
+
+<body>
+
+    <h2> <center> Stellar Effort's </center></h2>
+    <h1><center> LUNAR LANDER </center></h1>
+    <br><br>
+
+    <div class="container">
+        <div class ="two-column">
+
+            <div class="left-column">
+                <div class="block lunar-graphic"> 
+            <div id="lander20"></div> 
+    </div>
+    </div>
+    
+
+    <!-- 
+    <div id="stats">
+        <div>Altitude: <span id="altitude">1000</span></div>
+        <div>Velocity: <span id="velocity">0</span></div>
+        <div>Thrust: <span id="thrust"> </span></div>
+        <div>Fuel: <span id="fuel">1000</span></div>
+        <div>Status: <span id="status"></span></div>
+    </div>
+    -->
+
+    <div class="right-column">
+        <div id="stats"> 
+        <!-- Dashboard Data -->
+        <div class="block dashboard">
+        <p>Dashboard</p>
+        <div>Altitude: <span id="altitude">1000</span></div>
+        <div>Velocity: <span id="velocity">0</span></div>
+        <div>Fuel: <span id="fuel">1000</span></div>
+        </div>
+
+        <!-- Status & Alerts -->
+        <div class="block status">
+        <p>Status and Alerts</p>
+        <p id="altitude-Alert"></p>
+        <div>Status: <span id="status"></span></div>
+        </div>
+
+        <!-- Thrusting: OFF/ON -->
+        <div class="block thrust">
+        <p>Thrusting Toggle</p>
+        <div class="control-panel">
+            <div> Thrust: <span id="thrust"> </span></div>
+            <button id="thrusterButton" class="thrusterButton">OFF</button> 
+        </div>
+          
+<br><br>
+                        </div>
+                     </div>
+                </div>
+    </div>
+
+
+</div>
+</div>
+</body>
+</html>
