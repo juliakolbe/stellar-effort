@@ -1,19 +1,13 @@
-#copied this code from chatgpt to test if my code was working. Delete this before submitting project. 
-
 from flask import Flask, request, jsonify, render_template
 from Algorithms1 import DoomLander, PhysicsConstants, LanderState, Vector2D, ThrustControl
-
 
 app = Flask(__name__)
 
 # Initialize simulation
 doom_lander = DoomLander()
-doom_lander.state = LanderState()
-doom_lander.state.velocity = Vector2D()
-doom_lander.state.acceleration = Vector2D()
-doom_lander.thruster = ThrustControl()
-
 doom_lander.init(empty_mass=1200.0, initial_fuel=640.0, initial_altitude=8500.0)
+
+# Initialize Lander state
 doom_lander.state.init(1200.0, 640.0)
 doom_lander.state.velocity.init(0.0, 0.0)
 doom_lander.state.acceleration.init(0.0, 0.0)
@@ -28,7 +22,7 @@ def index():
 def thrust():
     data = request.get_json()
     thrust_value = data.get('thrust', 0.0)
-    print("Thrust received: {thrust_value}")
+    print(f"Thrust received: {thrust_value}")  # Fixed print statement
     doom_lander.queue_thrust_command(thrust_value)
     doom_lander.update()
     return jsonify(success=True)
