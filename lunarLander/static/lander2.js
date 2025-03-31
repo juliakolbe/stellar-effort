@@ -72,12 +72,21 @@ document.addEventListener("keydown", event => {
 function updatePosition() {
     if (leftArrow) Xposition -= 2;
     if (rightArrow) Xposition += 2;
-    if (thrustOn) Yposition += 3; // Increase Y when thrust is applied
-    else Yposition -= 1; // Simulating gravity pulling the lander down
+    
+    if (thrustOn) {
+        Yposition += 3; // Move up when thrust is on
+    } else {
+        Yposition -= 1; // Gravity pulls it down
+    }
+
+    if (Yposition < 0) Yposition = 0; // Prevent lander from going below ground
 
     lander.style.left = `${Xposition}px`;
     lander.style.bottom = `${Yposition}px`;
+
     requestAnimationFrame(updatePosition);
+}
+
 }
 
 updatePosition();
