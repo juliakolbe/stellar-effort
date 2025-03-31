@@ -21,7 +21,7 @@
       height: 15px; 
       background: silver;
       position: absolute; /* allows us to position the lander */
-      bottom: 50px;
+      top: 50px;
       left: 150px;
       transform: translateX(-50%);
       transition: bottom 0.1s linear; /* smooth transition for the bottom property */
@@ -141,4 +141,3 @@
     font-weight: bold;
     border: 2px solid #fff;
   }
-  
