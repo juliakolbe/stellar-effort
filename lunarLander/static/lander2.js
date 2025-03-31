@@ -8,6 +8,7 @@ const altitudeAlert = document.getElementById("altitude-Alert");
 
 let landed = false;
 let Xposition = 200; 
+let Yposition = 200;
 let leftArrow = false;
 let rightArrow = false;
 
@@ -76,7 +77,18 @@ function updateX() {
     requestAnimationFrame(updateX);
 }
 
+function updateY() {
+    if (thrustOn) {
+        Yposition += 3; // Move up when thrust is on
+    } else {
+        Yposition -= 1; // Gravity pulls it down
+    }
+    if (Yposition < 0) Yposition = 0; // Prevent lander from going below ground
+    lander.style.top = `{Yposition}px`;
+    requestAnimationFrame(updateY);
+
 updateX();
+updateY();
 
 /* this function below pulls from the flask python connection and fetches these values */
 function updateGUI(state) {
