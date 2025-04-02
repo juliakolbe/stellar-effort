@@ -66,8 +66,17 @@ function getLanderState() {
 }
 
 function updateX() {
-    if (leftArrow) Xposition -= 2;
-    if (rightArrow) Xposition += 2; 
+    const graphic = document.querySelector(".lunar-graphic");
+    const landerPerimeter = lander.getBoundingClientRect();
+    const graphicPerimeter = graphic.getBoundingClientRect();
+
+    if (leftArrow && landerPerimeter.left > graphicPerimeter.left)
+        {
+            Xposition -= 2;
+        } 
+    if (rightArrow && landerPerimeter.right < graphicPerimeter.right) { 
+            Xposition += 2; 
+        }
 
     lander.style.left = `${Xposition}px`;
     requestAnimationFrame(updateX);
