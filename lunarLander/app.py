@@ -4,15 +4,7 @@ from Algorithms1 import DoomLander, PhysicsConstants, LanderState, Vector2D, Thr
 app = Flask(__name__)
 
 # Initialize simulation
-doom_lander = DoomLander()
-doom_lander.init(empty_mass=1200.0, initial_fuel=640.0, initial_altitude=8500.0)
-
-# Initialize Lander state
-doom_lander.state.init(1200.0, 640.0)
-doom_lander.state.velocity.init(0.0, 0.0)
-doom_lander.state.acceleration.init(0.0, 0.0)
-doom_lander.thruster.init()
-
+doom_lander = DoomLander(empty_mass=1200.0, initial_fuel=640.0, initial_altitude=8500.0)
 
 @app.route('/')
 def index():
@@ -31,13 +23,11 @@ def thrust():
 def state():
     # doom_lander.queue_thrust_command(0.0)  # Apply no thrust if nothing is pressed
     doom_lander.update()  # Advance physics regardless
-
     thrust_status = "Inactive"
     if doom_lander.get_fuel_mass() <= 0:
         thrust_status = "Empty"
     elif doom_lander.thruster.thrust_force > 0:
         thrust_status = "Engaged"
-
     return jsonify({
         'altitude': doom_lander.get_altitude(),
         'velocity': doom_lander.get_velocity(),
