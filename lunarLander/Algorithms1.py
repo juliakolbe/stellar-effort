@@ -21,27 +21,23 @@ class LanderState:
         self.fuel_mass = initial_fuel
         self.mass = empty_mass + initial_fuel
         self.altitude = 0.0
-        self.velocity = Vector2D()
-        self.velocity.__init__(0.0, 0.0)
-        self.acceleration = Vector2D()
-        self.acceleration.__init__(0.0, 0.0)
+        self.velocity = Vector2D(0.0, 0.0)
+        self.acceleration = Vector2D(0.0, 0.0)
 # Thrust control
 class ThrustControl:
     def __init__(self):
         self.thrust_force = 0.0
         self.burn_efficiency = 1.0
     def apply_thrust(self, lander, duration):
-        fuel_used = (self.thrust_force / self.burn_efficiency) *  duration
+        fuel_used = (self.thrust_force / self.burn_efficiency) * duration
         lander.fuel_mass -= fuel_used
         lander.mass = lander.empty_mass + lander.fuel_mass
 # Lander "Doom"
 class DoomLander:
     def __init__(self, empty_mass, initial_fuel, initial_altitude):
-        self.state = LanderState()
-        self.state.__init__(empty_mass, initial_fuel)
+        self.state = LanderState(empty_mass, initial_fuel)
         self.state.altitude = initial_altitude
         self.thruster = ThrustControl()
-        self.thruster.__init__()
         self.thrust_commands = deque()
     def calculate_gravitational_acceleration(self):
         r = PhysicsConstants.moon_radius + self.state.altitude
