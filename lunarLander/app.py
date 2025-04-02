@@ -3,7 +3,7 @@ from Algorithms1 import DoomLander, PhysicsConstants, LanderState, Vector2D, Thr
 
 app = Flask(__name__)
 
-# Initialize simulation
+# Initialize simulation with proper arguments
 doom_lander = DoomLander(empty_mass=1200.0, initial_fuel=640.0, initial_altitude=8500.0)
 
 @app.route('/')
@@ -21,7 +21,6 @@ def thrust():
 
 @app.route('/state')
 def state():
-    # doom_lander.queue_thrust_command(0.0)  # Apply no thrust if nothing is pressed
     doom_lander.update()  # Advance physics regardless
     thrust_status = "Inactive"
     if doom_lander.get_fuel_mass() <= 0:
