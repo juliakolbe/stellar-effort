@@ -43,6 +43,7 @@ document.addEventListener("keyup", (event) => {
         thrustOn = false;
         thrusterbutton.classList.remove("active");
         thrusterbutton.innerHTML = "Inactive";
+        Algorithms1.py.ThrustConrol.apply_thrust(doomlander, 1);
     }
 });
 
@@ -83,7 +84,7 @@ function updateX() {
 }
 
 function updateY() {
-    if (thrustOn) {
+    /*if (thrustOn) {
         Yposition -= 3; // Move up
     } else {
         Yposition += 1; // Gravity pulls it down
@@ -91,7 +92,7 @@ function updateY() {
 
     if (Yposition < 0) Yposition = 0; // Prevent lander from going too high
     lander.style.top = `${Yposition}px`;
-
+    */
     requestAnimationFrame(updateY);
 }
 

@@ -29,9 +29,14 @@ class ThrustControl:
         self.thrust_force = 0.0
         self.burn_efficiency = 1.0
     def apply_thrust(self, lander, duration):
-        fuel_used = (self.thrust_force / self.burn_efficiency) * duration
-        lander.fuel_mass -= fuel_used
-        lander.mass = lander.empty_mass + lander.fuel_mass
+        # check to make sure you have fuel
+        if lander.fuel_mass <= 0:
+            fuel_used = 0
+            lander.fuel_mass = 0
+        else:    
+            fuel_used = (self.thrust_force / self.burn_efficiency) * duration
+            lander.fuel_mass -= fuel_used
+            lander.mass = lander.empty_mass + lander.fuel_mass
 # Lander "Doom"
 class DoomLander:
     def __init__(self, empty_mass, initial_fuel, initial_altitude):
@@ -56,10 +61,18 @@ class DoomLander:
         dt = PhysicsConstants.time_step
         
         # First update velocity using current acceleration
-        self.state.velocity.y = self.state.velocity.y + net_accel * dt
+        # check to make sure you haven't hit the ground
+        if self.state.altitude <= 0:
+            self.state.velocity.y = self.state.velocity.y
+        else:
+            self.state.velocity.y = self.state.velocity.y + net_accel * dt
         
         # Then update altitude using new velocity
-        self.state.altitude = self.state.altitude + self.state.velocity.y * dt
+        # check to make sure you haven't hit the ground
+        if self.state.altitude <= 0:
+            self.state.altitude = 0
+        else:
+            self.state.altitude = self.state.altitude + self.state.velocity.y * dt
         
         # Apply thrust effects on fuel if thrusting
         if self.thruster.thrust_force > 0:
