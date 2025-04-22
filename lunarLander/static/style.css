@@ -17,13 +17,12 @@ body {
 }
 
 #lander20 {
-    width: 20px;
-    height: 30px;
-    background: silver;
+    width: 60px;
+    height: 80px;
+    background: url('gameRocket.png') no-repeat center center / contain;
     position: absolute;
     top: 200px;
     left: 200px;
-    border-radius: 5px;
 }
 
 h1 {
@@ -76,26 +75,85 @@ h2 {
 
 .lunar-graphic {
     position: relative;
-    background-color: black;
+    background: url('lunarBG.png') no-repeat center top;
     overflow: hidden;
     width: 80%;
     height: 800px;
     margin: 0 auto;
-    border: 2px solid #f98757;
+    border: 2px solid #f480ff; 
 }
 
-.dashboard, .status, .thrust {
+/*.dashboard, .status, .thrust {
     flex: 0.75;
     height: 250px;
+}*/
+
+.dashboard {
+    flex: 0.75;
+    height: 250px;
+    background: black;
+    border-color: #f480ff;
+    box-shadow: 0 0 10px #f480ff;
+    text-shadow: 0 0 5px #f480ff;
+    color: #f480ff;
 }
 
-.thrusterButton {
-    background-color: rgb(218, 136, 152);
+.status {
+    flex: 0.75;
+    height: 250px;
+    background: black;
+    border-color: f480ff;
+    box-shadow: 0 0 10px #f480ff;
+    text-shadow: 0 0 5px #f480ff;
+    color: #f480ff;
+}
+
+.thrust {
+    flex: 0.75;
+    height: 250px;
+    background: black;
+    border-color: #f480ff;
+    box-shadow: 0 0 10px #f480ff;
+    text-shadow: 0 0 5px #f480ff;
+    color: #f480ff;
+}
+
+/*.thrusterButton {
+    background-color: black;
     color: white;
     font-weight: bold;
-    border: 2px solid #fff;
+    border: 2px solid #ff6c6c;
 }
 
 .thrusterButton.active {
     background-color: crimson;
 }
+    */
+
+    .thrusterButton {
+        font-family: 'PressStart2P-Regular'; 
+        background: black;
+        border: 2px solid #f2e643;
+        color: #f2e643;
+        padding: 10px 20px;
+        font-size: 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-shadow: 0 0 5px #f2e643;
+        box-shadow: 0 0 15px #f2e643;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .thrusterButton.active {
+        font-family: 'PressStart2P-Regular'; 
+        background: crimson;
+        border: 2px solid crimson;
+        color: white;
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 15px crimson; }
+        50% { box-shadow: 0 0 35px crimson; }
+        100% { box-shadow: 0 0 15px crimson; }
+    }

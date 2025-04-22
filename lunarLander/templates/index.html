@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{{ url_for('static', filename='lander2.js') }}" defer></script>
-   <!--  <link rel="stylesheet" href="style.css"> -->
-   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+   <!-- <script src="{{ url_for('static', filename='lander2.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+
+   <link rel="stylesheet" href="../static/style.css">
+   <script src="../static/lander2.js" defer></script>
+
+
     <title> Stellar Effort's Lunar Lander </title>
 
 <!-- 
@@ -90,8 +94,11 @@
         <!-- Dashboard Data -->
         <div class="block dashboard">
         <p>Dashboard</p>
+        <br><br>
         <div>Altitude: <span id="altitude">1000</span></div>
+        <br><br>
         <div>Velocity: <span id="velocity">0</span></div>
+        <br><br>
         <div>Fuel: <span id="fuel">1000</span></div>
         </div>
 
@@ -104,9 +111,9 @@
 
         <!-- Thrusting: OFF/ON -->
         <div class="block thrust">
-        <p>Thrusting Toggle</p>
         <div class="control-panel">
             <div> Thrust: <span id="thrust"> </span></div>
+            <br><br>
             <button id="thrusterButton" class="thrusterButton">OFF</button> 
         </div>
           
