@@ -117,6 +117,15 @@ function updateGUI(state) {
     fuelText.innerText = `${fuel} kg`;
     document.getElementById("thrust").innerHTML = thrust_status;
 
+    /* this will give the fuel status a red glow when fuel is low */
+    if (fuel <= 150) {
+        fuelText.style.color = "crimson";
+        fuelText.style.textShadow = "0 0 8px red";
+    } else {
+        fuelText.style.color = "#f480ff";
+        fuelText.style.textShadow = "0 0 5px #f480ff";
+    }
+
     if (hasLanded && !landed) {
         landed = true;
         statusText.innerText = safe ? "Landed safely!" : "Crashed...";
