@@ -43,16 +43,22 @@ document.addEventListener("keyup", (event) => {
         thrustOn = false;
         thrusterbutton.classList.remove("active");
         thrusterbutton.innerHTML = "Inactive";
-        Algorithms1.py.ThrustConrol.apply_thrust(doomlander, 1);
+        //Algorithms1.py.ThrustConrol.apply_thrust(doomlander, 1);
     }
 });
 
 function sendThrust(thrustValue) {
-    fetch('/thrust', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ thrust: thrustValue })
-    });
+    if (`${fuel}` == 0){
+        //not working
+        statusText.innerText = "Thrust Denied";
+    }
+    else {
+        fetch('/thrust', {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ thrust: thrustValue })
+        });
+    }
 }
 
 // Fetch lander state from server every 100ms
