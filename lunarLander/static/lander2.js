@@ -12,6 +12,9 @@ let Yposition = 200;
 let leftArrow = false;
 let rightArrow = false;
 let thrustOn = false;
+//stuff I added to get the lander to move properly
+let running = true;
+let currentAltitude = 1;
 
 console.log("Script is running!");
 
@@ -90,15 +93,15 @@ function updateX() {
 }
 
 function updateY() {
-    /*if (thrustOn) {
-        Yposition -= 3; // Move up
+    if (running) {
+        Yposition = currentAltitude; 
     } else {
-        Yposition += 1; // Gravity pulls it down
+        Yposition = 10; 
     }
 
     if (Yposition < 0) Yposition = 0; // Prevent lander from going too high
     lander.style.top = `${Yposition}px`;
-    */
+   
     requestAnimationFrame(updateY);
 }
 
@@ -113,6 +116,12 @@ function updateGUI(state) {
     console.log("Updating GUI", Xposition, Yposition);
 
     altitudeText.innerText = `${altitude.toFixed(1)} m`;
+    
+    // assuming the altitude starts at 8,500 m
+    // divide by 10 (assume roughly 850px on screen)
+    // invert
+    currentAltitude = (8500 - `${altitude}`) / 10;
+
     velocityText.innerText = `${velocity.toFixed(2)} m/s`;
     fuelText.innerText = `${fuel} kg`;
     document.getElementById("thrust").innerHTML = thrust_status;
@@ -129,6 +138,7 @@ function updateGUI(state) {
     if (hasLanded && !landed) {
         landed = true;
         statusText.innerText = safe ? "Landed safely!" : "Crashed...";
+        running = false;
     }
 
     altitudeAlert.innerText = (altitude < 250 && altitude > 0) ? "Low Altitude" : "";
