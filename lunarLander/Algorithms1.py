@@ -33,24 +33,25 @@ class ThrustControl:
         self.thrust_force = 0.0  # Newtons
         self.burn_efficiency = 1.0  # N per (kg/s) fuel
 
-    def apply_thrust(self, lander, duration):
-        if lander.fuel_mass <= 0:
-            fuel_used = 0
+def apply_thrust(self, lander, duration):
+    if lander.fuel_mass <= 0:
+        fuel_used = 0
+        lander.fuel_mass = 0
+        self.thrust_force = 0  # No thrust if no fuel
+    else:
+        fuel_needed = (self.thrust_force / self.burn_efficiency) * duration
+        if fuel_needed >= lander.fuel_mass:
+            # Not enough fuel for full thrust
+            actual_burn_time = (lander.fuel_mass * self.burn_efficiency) / self.thrust_force
+            fuel_used = lander.fuel_mass  # Use up all fuel
             lander.fuel_mass = 0
-            self.thrust_force = 0  # No thrust if no fuel
+            self.thrust_force = self.thrust_force * (actual_burn_time / duration)  # scale down thrust
         else:
-            fuel_needed = (self.thrust_force / self.burn_efficiency) * duration
-            if fuel_needed >= lander.fuel_mass:
-                # Not enough fuel for full thrust
-                actual_burn_time = (lander.fuel_mass * self.burn_efficiency) / self.thrust_force
-                fuel_used = lander.fuel_mass  # Use up all fuel
-                lander.fuel_mass = 0
-                self.thrust_force = self.thrust_force * (actual_burn_time / duration)  # scale down thrust
-            else:
-                fuel_used = fuel_needed
-                lander.fuel_mass -= fuel_used
+            fuel_used = fuel_needed
+            lander.fuel_mass -= fuel_used
 
     lander.mass = lander.empty_mass + lander.fuel_mass
+
 # Lander control
 class DoomLander:
     def __init__(self, empty_mass, initial_fuel, initial_altitude):
