@@ -28,29 +28,31 @@ class LanderState:
         self.acceleration = Vector2D(0.0, 0.0)  # m/s^2
 
 # Thrust control
-# Thrust control
 class ThrustControl:
     def __init__(self):
         self.thrust_force = 0.0  # Newtons
-        self.burn_efficiency = 1.0  # N per (kg/s) fuel
+        self.burn_efficiency = 100.0  # N per (kg/s)
 
     def apply_thrust(self, lander, duration):
         if lander.fuel_mass <= 0:
-            fuel_used = 0
             lander.fuel_mass = 0
-            self.thrust_force = 0  # No thrust if no fuel
+            self.thrust_force = 0
         else:
-            fuel_needed = (self.thrust_force / self.burn_efficiency) * duration
+            # Compute fuel flow rate (kg/s)
+            fuel_flow_rate = self.thrust_force / self.burn_efficiency  # kg/s
+            fuel_needed = fuel_flow_rate * duration  # kg
+
             if fuel_needed >= lander.fuel_mass:
-                # Not enough fuel for full thrust
-                actual_burn_time = (lander.fuel_mass * self.burn_efficiency) / self.thrust_force
-                fuel_used = lander.fuel_mass  # Use up all fuel
+                # Only enough fuel for partial thrust
+                actual_burn_time = lander.fuel_mass / fuel_flow_rate
+                fuel_used = lander.fuel_mass
                 lander.fuel_mass = 0
-                self.thrust_force = self.thrust_force * (actual_burn_time / duration)  # scale down thrust
+                self.thrust_force = self.thrust_force * (actual_burn_time / duration)
             else:
                 fuel_used = fuel_needed
                 lander.fuel_mass -= fuel_used
 
+        # Always update mass
         lander.mass = lander.empty_mass + lander.fuel_mass
 
 # Lander control
@@ -63,37 +65,50 @@ class DoomLander:
 
     def calculate_gravitational_acceleration(self):
         r = PhysicsConstants.moon_radius + self.state.altitude
-        return -1 * (PhysicsConstants.G * PhysicsConstants.moon_mass) / (r * r)
+        return (PhysicsConstants.G * PhysicsConstants.moon_mass) / (r * r)
 
     def update(self):
         g = self.calculate_gravitational_acceleration()
+        dt = PhysicsConstants.time_step
+
         if self.thrust_commands:
             thrust = self.thrust_commands.popleft()
             self.thruster.thrust_force = thrust
         else:
-            self.thruster.thrust_force = 0.0  # No thrust if none commanded
+            self.thruster.thrust_force = 0.0
 
-        # Net acceleration: thrust upward (+), gravity downward (-)
-        net_accel = self.thruster.thrust_force / self.state.mass + g
-        dt = PhysicsConstants.time_step
+        if self.thruster.thrust_force > 0:
+            # Pre-burn mass
+            initial_mass = self.state.mass
 
-        # Update velocity first
+            # Estimate fuel use during this step
+            fuel_flow_rate = self.thruster.thrust_force / self.thruster.burn_efficiency  # kg/s
+            fuel_needed = fuel_flow_rate * dt  # kg
+
+            if fuel_needed >= self.state.fuel_mass:
+                fuel_used = self.state.fuel_mass
+                mid_mass = self.state.empty_mass + 0.5 * fuel_used  # average mass
+            else:
+                fuel_used = fuel_needed
+                mid_mass = self.state.empty_mass + self.state.fuel_mass - 0.5 * fuel_used
+
+            # Net acceleration
+            net_accel = (self.thruster.thrust_force - g * initial_mass) / mid_mass
+
+            # Update fuel and mass
+            self.thruster.apply_thrust(self.state, dt)
+        else:
+            net_accel = -g  # Gravity only
+
+        # Update velocity and altitude
         if self.state.altitude <= 0:
             self.state.velocity.y = 0
-        else:
-            self.state.velocity.y = self.state.velocity.y + net_accel * dt
-
-        # Update altitude with corrected kinematics (0.5 * a * dt^2 term added)
-        if self.state.altitude <= 0:
             self.state.altitude = 0
         else:
-            self.state.altitude = self.state.altitude + self.state.velocity.y * dt + 0.5 * net_accel * dt * dt
+            self.state.velocity.y += net_accel * dt
+            self.state.altitude += self.state.velocity.y * dt + 0.5 * net_accel * dt * dt
 
-        # Update fuel mass if thrusting
-        if self.thruster.thrust_force > 0:
-            self.thruster.apply_thrust(self.state, dt)
-
-        # Prevent altitude going below surface
+        # Prevent going underground
         if self.state.altitude < 0:
             self.state.altitude = 0
             self.state.velocity.y = 0
