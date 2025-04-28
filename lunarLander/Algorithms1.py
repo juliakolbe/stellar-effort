@@ -34,6 +34,7 @@ class ThrustControl:
         self.burn_efficiency = 1.0  # N per (kg/s) fuel
 
     def apply_thrust(self, lander, duration):
+    def apply_thrust(self, lander, duration):
     if lander.fuel_mass <= 0:
         fuel_used = 0
         lander.fuel_mass = 0
@@ -49,9 +50,8 @@ class ThrustControl:
         else:
             fuel_used = fuel_needed
             lander.fuel_mass -= fuel_used
-        
-        lander.mass = lander.empty_mass + lander.fuel_mass
 
+    lander.mass = lander.empty_mass + lander.fuel_mass
 # Lander control
 class DoomLander:
     def __init__(self, empty_mass, initial_fuel, initial_altitude):
