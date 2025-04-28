@@ -34,7 +34,6 @@ class ThrustControl:
         self.burn_efficiency = 1.0  # N per (kg/s) fuel
 
     def apply_thrust(self, lander, duration):
-    def apply_thrust(self, lander, duration):
     if lander.fuel_mass <= 0:
         fuel_used = 0
         lander.fuel_mass = 0
