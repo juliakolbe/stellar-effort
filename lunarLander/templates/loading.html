@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Moon Lander</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<style>
+  @font-face {
+  font-family: 'PressStart2P-Regular';
+  src: url('{{ url_for("static", filename="PressStart2P-Regular.ttf") }}') format('truetype');
+}
+
+
+  body {
+  background-color: #190620;
+  font-family: 'Georgia', 'Times New Roman', Times, serif;
+  margin: 50px; /* adds space around all content */
+  padding: 0px; 
+  color: #d6d6d6;
+    font-family: 'PressStart2P-Regular','Orbitron', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Center the content */
+.container {
+    padding: 30px;
+    border-radius: 10px;
+}
+
+/* Style the title */
+h1 {
+    font-size: 3rem;
+    font-family: 'PressStart2P-Regular', sans-serif;
+    margin-bottom: 10px;
+}
+
+.button-group a {
+  display: inline-block;
+  margin: 15px 0; 
+}
+
+.thrusterButton {
+        font-family: 'PressStart2P-Regular'; 
+        background: black;
+        border: 2px solid #f480ff;
+        color: #f480ff;
+        padding: 10px 20px;
+        font-size: 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-shadow: 0 0 5px #f480ff;
+        box-shadow: 0 0 15px #f480ff;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .thrusterButton.active {
+        font-family: 'PressStart2P-Regular'; 
+        background: crimson;
+        border: 2px solid crimson;
+        color: white;
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 15px crimson; }
+        50% { box-shadow: 0 0 35px crimson; }
+        100% { box-shadow: 0 0 15px crimson; }
+    }
+</style>
+
+<body>
+  <video autoplay loop muted playsinline class="background-video">
+    <source src="{{ url_for('static', filename='juliaSpace.mp4') }}" type="video/mp4">
+  </video>
+  
+
+  <div class="container">
+ 
+      <h1>STELLAR EFFORT</h1>
+      <p>Doom Lander: Lunar Simulation </p>
+      <div class="button-group">
+        <a onclick="startSimulation('empty')" class="thrusterButton">Mode 1: Empty Rocket</a><br>
+        <a onclick="startSimulation('rover')" class="thrusterButton">Mode 2: Lunar Rover</a><br>
+        <a onclick="startSimulation('astronauts')" class="thrusterButton">Mode 3: Two Astronauts</a>
+      </div>
+  </div>
+
+  <script>
+    function startSimulation(mode) {
+      fetch('/configure', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = '/simulation'; // this redirects to the Flask and will connect with index.html
+        } else {
+          alert("Stellar Effort has failed to launch simulation.");
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
+

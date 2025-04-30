@@ -15,6 +15,10 @@ let thrustOn = false;
 //stuff I added to get the lander to move properly
 let running = true;
 let currentAltitude = 1;
+let touchdown = null;
+let currentFuel =0;
+let finalAlt = null;
+let finalVel = null;
 
 console.log("Script is running!");
 
@@ -27,7 +31,7 @@ document.addEventListener("keydown", (event) => {
         rightArrow = true;
     }
     if (event.code === "Space" && !landed) {
-        sendThrust(1000);
+        // sendThrust(1000);
         thrustOn = true;
         thrusterbutton.classList.add("active");
         thrusterbutton.innerHTML = "Engaged";
@@ -51,21 +55,13 @@ document.addEventListener("keyup", (event) => {
 });
 
 function sendThrust(thrustValue) {
-    if (`${fuel}` == 0){
-        //not working
-        statusText.innerText = "Thrust Denied";
-    }
-    else {
-        fetch('/thrust', {
+    console.log("Sending thrust:", thrustValue); 
+    fetch('/thrust', {
             method: 'POST', 
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ thrust: thrustValue })
-        });
-    }
+    });
 }
-
-// Fetch lander state from server every 100ms
-setInterval(getLanderState, 100); 
 
 function getLanderState() {
     fetch('/state')
@@ -94,52 +90,74 @@ function updateX() {
 
 function updateY() {
     if (running) {
-        Yposition = currentAltitude; 
+        Yposition = currentAltitude;
     } else {
-        Yposition = 10; 
+        Yposition = touchdown !== null ? touchdown : Yposition;
     }
 
-    if (Yposition < 0) Yposition = 0; // Prevent lander from going too high
+    if (Yposition < 0) Yposition = 0;
+    if (Yposition > 750) Yposition = 750;
+
     lander.style.top = `${Yposition}px`;
-   
     requestAnimationFrame(updateY);
 }
-
-// Call the update functions
-updateX();
-updateY();
 
 // Update GUI with fetched data
 function updateGUI(state) {
     const { altitude, velocity, fuel, landed: hasLanded, thrust_status, safe } = state;
 
     console.log("Updating GUI", Xposition, Yposition);
+    console.log("altitude:", altitude, "hasLanded:", hasLanded, "landed:", landed, "running:", running);
 
-    altitudeText.innerText = `${altitude.toFixed(1)} m`;
-    
+
+    altitudeText.innerText = landed ? `${finalAlt} m` : `${altitude.toFixed(1)} m`;
+    velocityText.innerText = landed ? `${finalVel} m/s` : `${velocity.toFixed(2)} m/s`;
+    console.log("Final altitude:", finalAlt, "Final velocity:", finalVel);
+
     // assuming the altitude starts at 8,500 m
     // divide by 10 (assume roughly 850px on screen)
     // invert
-    currentAltitude = (8500 - `${altitude}`) / 10;
+    currentAltitude = (8500 - altitude) / 2; 
+    currentFuel = fuel;
 
     velocityText.innerText = `${velocity.toFixed(2)} m/s`;
     fuelText.innerText = `${fuel} kg`;
     document.getElementById("thrust").innerHTML = thrust_status;
 
     /* this will give the fuel status a red glow when fuel is low */
-    if (fuel <= 150) {
-        fuelText.style.color = "crimson";
-        fuelText.style.textShadow = "0 0 8px red";
-    } else {
+    if (fuel > 150) {
         fuelText.style.color = "#f480ff";
-        fuelText.style.textShadow = "0 0 5px #f480ff";
+        fuelText.style.textShadow = "0 0 8px #f480ff";
+        statusText.innerText = "LOW FUEL";
+    } else if (fuel > 0 && fuel <= 150) {
+        fuelText.style.color = "crimson";
+        fuelText.style.textShadow = "0 0 5px red";
+        statusText.innerText = "LOW FUEL";
+    } else {
+        fuelText.style.color = "gray";
+        fuelText.style.textShadow = "0 0 5px gray";
+        statusText.innerText = "FUEL DEPLETED";
+
     }
 
     if (hasLanded && !landed) {
         landed = true;
+        touchdown = currentAltitude;
         statusText.innerText = safe ? "Landed safely!" : "Crashed...";
         running = false;
+
+        finalAlt= altitude.toFixed(1);
+        finalVel= velocity.toFixed(2);
     }
 
     altitudeAlert.innerText = (altitude < 250 && altitude > 0) ? "Low Altitude" : "";
 }
+
+updateX();
+updateY();
+setInterval(getLanderState, 100);
+setInterval(() => {
+    if (thrustOn && !landed && currentFuel > 0) {
+        sendThrust(8000);
+    }
+}, 100);
