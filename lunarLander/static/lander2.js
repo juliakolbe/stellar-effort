@@ -46,22 +46,15 @@ document.addEventListener("keyup", (event) => {
         thrustOn = false;
         thrusterbutton.classList.remove("active");
         thrusterbutton.innerHTML = "Inactive";
-        //Algorithms1.py.ThrustConrol.apply_thrust(doomlander, 1);
     }
 });
 
 function sendThrust(thrustValue) {
-    if (`${fuel}` == 0){
-        //not working
-        statusText.innerText = "Thrust Denied";
-    }
-    else {
-        fetch('/thrust', {
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ thrust: thrustValue })
-        });
-    }
+    fetch('/thrust', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ thrust: thrustValue })
+    });
 }
 
 // Fetch lander state from server every 100ms
@@ -96,7 +89,7 @@ function updateY() {
     if (running) {
         Yposition = currentAltitude; 
     } else {
-        Yposition = 10; 
+        Yposition = 800; 
     }
 
     if (Yposition < 0) Yposition = 0; // Prevent lander from going too high
@@ -118,7 +111,7 @@ function updateGUI(state) {
     altitudeText.innerText = `${altitude.toFixed(1)} m`;
     
     // assuming the altitude starts at 8,500 m
-    // divide by 10 (assume roughly 850px on screen)
+    // divide by 10 (assumes roughly 850px on screen)
     // invert
     currentAltitude = (8500 - `${altitude}`) / 10;
 

@@ -34,7 +34,7 @@ class ThrustControl:
             fuel_used = 0
             lander.fuel_mass = 0
         else:    
-            fuel_used = (self.thrust_force / self.burn_efficiency) * duration
+            fuel_used = (self.thrust_force / self.burn_efficiency) * (duration)
             lander.fuel_mass -= fuel_used
             lander.mass = lander.empty_mass + lander.fuel_mass
 # Lander "Doom"
@@ -77,6 +77,7 @@ class DoomLander:
         # Apply thrust effects on fuel if thrusting
         if self.thruster.thrust_force > 0:
             self.thruster.apply_thrust(self.state, dt)
+
     def queue_thrust_command(self, thrust):
         self.thrust_commands.append(thrust)
     def has_landed(self):
