@@ -89,7 +89,7 @@ function updateY() {
     if (running) {
         Yposition = currentAltitude; 
     } else {
-        Yposition = 800; 
+        Yposition = currentAltitude; 
     }
 
     if (Yposition < 0) Yposition = 0; // Prevent lander from going too high
@@ -113,7 +113,7 @@ function updateGUI(state) {
     // assuming the altitude starts at 8,500 m
     // divide by 10 (assumes roughly 850px on screen)
     // invert
-    currentAltitude = (8500 - `${altitude}`) / 10;
+    currentAltitude = (8500 - `${altitude}`) / 12;
 
     velocityText.innerText = `${velocity.toFixed(2)} m/s`;
     fuelText.innerText = `${fuel} kg`;
