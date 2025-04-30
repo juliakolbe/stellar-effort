@@ -17,8 +17,8 @@ body {
 }
 
 #lander20 {
-    width: 60px;
-    height: 80px;
+    width: 80px;
+    height: 100px;
     background: url('gameRocket.png') no-repeat center center / contain;
     position: absolute;
     top: 200px;
