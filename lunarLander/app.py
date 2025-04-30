@@ -1,9 +1,8 @@
 from flask import Flask, request, jsonify, render_template, redirect
 from Algorithms1 import DoomLander, PhysicsConstants, LanderState, Vector2D, ThrustControl
 
-# debugging
-import os
-print("Current working directory:", os.getcwd())
+# debugging: http://127.0.0.1:5000
+
 
 app = Flask(__name__)
 
@@ -20,6 +19,7 @@ def loading():
 
 @app.route('/simulation')
 def simulation():
+    print("Loading simulation page...")
     return render_template('index.html')
 
 @app.route('/thrust', methods=['POST'])
