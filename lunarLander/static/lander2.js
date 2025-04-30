@@ -15,7 +15,7 @@ let thrustOn = false;
 //stuff I added to get the lander to move properly
 let running = true;
 let currentAltitude = 1;
-let touchdown = null;
+let touchdown = 8500/12;
 let currentFuel =0;
 let finalAlt = null;
 let finalVel = null;
