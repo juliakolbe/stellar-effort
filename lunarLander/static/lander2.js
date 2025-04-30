@@ -109,7 +109,7 @@ function updateGUI(state) {
     console.log("altitude:", altitude, "hasLanded:", hasLanded, "landed:", landed, "running:", running);
 
 
-    altitudeText.innerText = landed ? `${finalAlt} m` : `${altitude.toFixed(1)} m`;
+    altitudeText.innerText = landed ? `${finalAlt} m` : `${altitude.toFixed(1)} m`; 
     velocityText.innerText = landed ? `${finalVel} m/s` : `${velocity.toFixed(2)} m/s`;
     console.log("Final altitude:", finalAlt, "Final velocity:", finalVel);
 
