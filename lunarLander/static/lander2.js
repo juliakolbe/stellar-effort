@@ -120,8 +120,8 @@ function updateGUI(state) {
     currentFuel = fuel;
 
     velocityText.innerText = `${velocity.toFixed(2)} m/s`;
-    fuelText.innerText = `${fuel} kg`;
-    document.getElementById("thrust").innerHTML = thrust_status;
+    fuelText.innerText = `${fuel.toFixed(0)} kg`;
+    //document.getElementById("thrust").innerHTML = thrust_status;
 
     /* this will give the fuel status a red glow when fuel is low */
     if (fuel > 150) {

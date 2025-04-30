@@ -40,7 +40,7 @@ class ThrustControl:
         else:
             # Compute fuel flow rate (kg/s)
             fuel_flow_rate = self.thrust_force / self.burn_efficiency  # kg/s
-            fuel_needed = fuel_flow_rate * duration  # kg
+            fuel_needed = fuel_flow_rate * duration*0.08  # kg
 
             if fuel_needed >= lander.fuel_mass:
                 # Only enough fuel for partial thrust
