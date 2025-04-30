@@ -127,7 +127,7 @@ function updateGUI(state) {
     if (fuel > 150) {
         fuelText.style.color = "#f480ff";
         fuelText.style.textShadow = "0 0 8px #f480ff";
-        statusText.innerText = "LOW FUEL";
+        statusText.innerText = "FUEL SUPPLY NORMAL";
     } else if (fuel > 0 && fuel <= 150) {
         fuelText.style.color = "crimson";
         fuelText.style.textShadow = "0 0 5px red";
