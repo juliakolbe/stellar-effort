@@ -116,7 +116,7 @@ function updateGUI(state) {
     // assuming the altitude starts at 8,500 m
     // divide by 10 (assumes roughly 850px on screen)
     // invert
-    currentAltitude = (8500 - altitude) / 2; 
+    currentAltitude = (8500 - altitude) / 12; 
     currentFuel = fuel;
 
     velocityText.innerText = `${velocity.toFixed(2)} m/s`;
