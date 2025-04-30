@@ -139,9 +139,9 @@ function updateGUI(state) {
 
     }
 
-    if (hasLanded && !landed) {
+    if (touchdown == currentAltitude) {
         landed = true;
-        touchdown = currentAltitude;
+        //touchdown = currentAltitude;
         statusText.innerText = safe ? "Landed safely!" : "Crashed...";
         running = false;
 
@@ -157,6 +157,6 @@ updateY();
 setInterval(getLanderState, 100);
 setInterval(() => {
     if (thrustOn && !landed && currentFuel > 0) {
-        sendThrust(8000);
+        sendThrust(12000);
     }
 }, 100);
