@@ -14,7 +14,7 @@ class PhysicsConstants:
     G = 6.67430e-11  # m^3/(kg s^2)
     moon_mass = 7.34767309e22  # kg
     moon_radius = 1.740e6  # meters
-    safe_landing_velocity = -20.0  # m/s
+    safe_landing_velocity = 20.0  # m/s
     time_step = 1.0  # seconds
 
 # Lander state
@@ -40,7 +40,7 @@ class ThrustControl:
         else:
             # Compute fuel flow rate (kg/s)
             fuel_flow_rate = self.thrust_force / self.burn_efficiency  # kg/s
-            fuel_needed = fuel_flow_rate * duration*0.08  # kg
+            fuel_needed = fuel_flow_rate * duration*0.07  # kg
 
             if fuel_needed >= lander.fuel_mass:
                 # Only enough fuel for partial thrust
