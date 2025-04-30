@@ -50,7 +50,6 @@ document.addEventListener("keyup", (event) => {
         thrustOn = false;
         thrusterbutton.classList.remove("active");
         thrusterbutton.innerHTML = "Inactive";
-        //Algorithms1.py.ThrustConrol.apply_thrust(doomlander, 1);
     }
 });
 
@@ -115,7 +114,7 @@ function updateGUI(state) {
     console.log("Final altitude:", finalAlt, "Final velocity:", finalVel);
 
     // assuming the altitude starts at 8,500 m
-    // divide by 10 (assume roughly 850px on screen)
+    // divide by 10 (assumes roughly 850px on screen)
     // invert
     currentAltitude = (8500 - altitude) / 2; 
     currentFuel = fuel;

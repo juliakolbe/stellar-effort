@@ -56,6 +56,7 @@ class ThrustControl:
         lander.mass = lander.empty_mass + lander.fuel_mass
 
 # Lander control
+
 class DoomLander:
     def __init__(self, empty_mass, initial_fuel, initial_altitude):
         self.state = LanderState(empty_mass, initial_fuel)
