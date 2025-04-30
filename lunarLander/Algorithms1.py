@@ -14,7 +14,7 @@ class PhysicsConstants:
     G = 6.67430e-11  # m^3/(kg s^2)
     moon_mass = 7.34767309e22  # kg
     moon_radius = 1.740e6  # meters
-    safe_landing_velocity = 5.0  # m/s
+    safe_landing_velocity = -20.0  # m/s
     time_step = 1.0  # seconds
 
 # Lander state
@@ -103,7 +103,7 @@ class DoomLander:
 
         # Update velocity and altitude
         if self.state.altitude <= 0:
-            self.state.velocity.y = 0
+            self.state.velocity.y = self.state.velocity.y
             self.state.altitude = 0
         else:
             self.state.velocity.y += net_accel * dt
@@ -112,7 +112,7 @@ class DoomLander:
         # Prevent going underground
         if self.state.altitude < 0:
             self.state.altitude = 0
-            self.state.velocity.y = 0
+            self.state.velocity.y = self.state.velocity.y
 
     def queue_thrust_command(self, thrust):
         self.thrust_commands.append(thrust)
