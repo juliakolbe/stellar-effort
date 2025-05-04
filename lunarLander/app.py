@@ -1,13 +1,10 @@
 from flask import Flask, request, jsonify, render_template, redirect
-from Algorithms1 import DoomLander, PhysicsConstants, LanderState, Vector2D, ThrustControl
-
-# debugging: http://127.0.0.1:5000
-
+from Algorithms1 import DoomLander, PhysicsConstants
 
 app = Flask(__name__)
 
-# Initialize simulation with proper arguments
-doom_lander = DoomLander(empty_mass=1200.0, initial_fuel=640.0, initial_altitude=8500.0)
+# Global variable for the lander instance (initially None)
+doom_lander = None
 
 @app.route('/')
 def home():
@@ -24,6 +21,10 @@ def simulation():
 
 @app.route('/thrust', methods=['POST'])
 def thrust():
+    global doom_lander
+    if doom_lander is None:
+        return jsonify(error="Lander not configured yet."), 400
+
     data = request.get_json()
     thrust_value = data.get('thrust', 0.0)
     print(f"Thrust received: {thrust_value}")
@@ -33,7 +34,11 @@ def thrust():
 
 @app.route('/state')
 def state():
-    doom_lander.update() # Advance physics regardless
+    global doom_lander
+    if doom_lander is None:
+        return jsonify(error="Lander not configured yet."), 400
+
+    doom_lander.update()
     thrust_status = "Inactive"
     if doom_lander.get_fuel_mass() <= 0:
         thrust_status = "Empty"
@@ -54,7 +59,7 @@ def configure():
     data = request.get_json()
     mode = data.get('mode', 'default')
 
-    if mode== 'empty':
+    if mode == 'empty':
         empty_mass = 1200
         fuel = 640
     elif mode == 'rover':
@@ -70,7 +75,6 @@ def configure():
     doom_lander = DoomLander(empty_mass=empty_mass, initial_fuel=fuel, initial_altitude=8500)
     print(f"Configured mode: {mode}, mass={empty_mass}, fuel={fuel}")
     return jsonify(success=True)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
