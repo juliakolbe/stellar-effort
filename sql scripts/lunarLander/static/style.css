@@ -1,0 +1,159 @@
+@font-face {
+    font-family: 'PressStart2P-Regular';
+    src: url('PressStart2P-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #190620;
+    font-family: 'PressStart2P-Regular', sans-serif;
+    margin: 50px; /* adds space around all content */
+    padding: 0px; 
+    color: #1e0303;
+    margin: 0;
+    overflow:hidden;
+    font-size: 0.75rem;
+}
+
+#lander20 {
+    width: 80px;
+    height: 100px;
+    background: url('gameRocket.png') no-repeat center center / contain;
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #e9dfdf;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #e9dfdf;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+}
+
+.flex-row {
+    display: flex;
+    gap: 20px;
+}
+
+.block {
+    background-color: #dcdcdc;
+    border: 1px solid #aaa;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    flex: 1;
+}
+
+.two-column {
+    display: flex;
+    gap: 10px;
+}
+
+.left-column {
+    flex: 4;
+}
+
+.right-column {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 300px;
+}
+
+.lunar-graphic {
+    position: relative;
+    background: url('background.png') no-repeat center top;
+    overflow: hidden;
+    width: 80%;
+    height: 800px;
+    margin: 0 auto;
+    border: 2px solid #f480ff; 
+}
+
+/*.dashboard, .status, .thrust {
+    flex: 0.75;
+    height: 250px;
+}*/
+
+.dashboard {
+    flex: 0.75;
+    height: 250px;
+    background: black;
+    border-color: #f480ff;
+    box-shadow: 0 0 10px #f480ff;
+    text-shadow: 0 0 5px #f480ff;
+    color: #f480ff;
+}
+
+.status {
+    flex: 0.75;
+    height: 250px;
+    background: black;
+    border-color: f480ff;
+    box-shadow: 0 0 10px #f480ff;
+    text-shadow: 0 0 5px #f480ff;
+    color: #f480ff;
+}
+
+.thrust {
+    flex: 0.75;
+    height: 250px;
+    background: black;
+    border-color: #f480ff;
+    box-shadow: 0 0 10px #f480ff;
+    text-shadow: 0 0 5px #f480ff;
+    color: #f480ff;
+}
+
+/*.thrusterButton {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #ff6c6c;
+}
+
+.thrusterButton.active {
+    background-color: crimson;
+}
+    */
+
+    .thrusterButton {
+        font-family: 'PressStart2P-Regular'; 
+        background: black;
+        border: 2px solid #f2e643;
+        color: #f2e643;
+        padding: 10px 20px;
+        font-size: 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-shadow: 0 0 5px #f2e643;
+        box-shadow: 0 0 15px #f2e643;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .thrusterButton.active {
+        font-family: 'PressStart2P-Regular'; 
+        background: crimson;
+        border: 2px solid crimson;
+        color: white;
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 15px crimson; }
+        50% { box-shadow: 0 0 35px crimson; }
+        100% { box-shadow: 0 0 15px crimson; }
+    }
