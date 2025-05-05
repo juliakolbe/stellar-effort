@@ -75,7 +75,7 @@ h2 {
 
 .lunar-graphic {
     position: relative;
-    background: url('lunarBG.png') no-repeat center top;
+    background: url('background.png') no-repeat center top;
     overflow: hidden;
     width: 80%;
     height: 800px;
